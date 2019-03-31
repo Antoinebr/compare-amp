@@ -1,0 +1,38 @@
+
+.form-input {
+
+    border-radius: 8px;
+    height: 60px;
+    width : 70%;
+    border-style: solid;
+    border:none;
+    border:1px solid #cccccc;
+
+    padding-left: 20px;
+
+    font-size: 19px; 
+
+}
+
+.textarea-input{
+
+    height: 200px;
+
+}
+
+.field-error{
+    border: 2px solid red;
+}
+
+.ab-error{
+    font-weight: bold;
+    color: red;
+}
+
+
+@media only screen and (max-width: 768px){
+    	
+    .form-input{
+        width: 100%;
+    }
+}

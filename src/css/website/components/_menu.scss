@@ -1,0 +1,21 @@
+.slide-menu .container{
+  position: relative;
+}
+
+.slide-menu .container img{
+  position: absolute;
+  left: 0px;
+  top: 9px;
+  width: 37px;
+}
+
+
+@media only screen and (min-width: 750px){
+  .slide-menu {
+    height: 60px;
+    z-index: 9;
+  }
+  #app-view{
+    margin-top: 60px;
+  }
+}

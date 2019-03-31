@@ -1,0 +1,11 @@
+.devices-content{
+
+  .img-container{
+    min-height:200px;
+  }
+
+}
+
+@media only screen and (max-width: 769px){
+  .devices-content .img-container{ min-height: auto;}
+}

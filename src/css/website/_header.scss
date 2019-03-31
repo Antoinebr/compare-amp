@@ -1,0 +1,48 @@
+header .container{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-areas:
+    'h1 h1 logo logo'
+    'p p logo logo';
+}
+
+
+
+ header .container h1{
+    grid-area: h1;
+ }
+
+ header .container img{
+    grid-area: logo;
+ }
+
+ header .container p{
+    grid-area: p;
+    width: 60%;
+ }
+
+
+
+ @media only screen and (max-width: 768px){
+    
+    header .container{
+        display: grid;
+        grid-gap: 20px;
+        grid-template-areas:
+        'logo'
+        'h1'
+        'p';
+    }
+
+    header .container img{
+        display: block;
+        margin: auto;
+    }
+
+    header .container p{
+        width: 100%;
+    }
+       
+}
+
+

@@ -1,0 +1,30 @@
+.desc-card{
+
+    padding: 20px;
+    background-color: #51b8e3;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.14);
+
+
+    .light-font{
+        font-size: 1.2em;
+        opacity: 0.7;
+        letter-spacing: 2px;
+    }
+
+
+    .bold-font{
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 0.8em;
+        letter-spacing: 0px;
+    }
+
+
+    .bold-spaced{
+        font-weight: bold;
+        line-height: 29px;
+        font-size: 1.2em;
+    }
+
+
+}

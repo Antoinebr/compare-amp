@@ -1,0 +1,33 @@
+.container{
+	width: 1200px;
+	display: block;
+	margin: auto;
+	max-width: 100%;
+}
+
+body{
+	background: url('./pattern.svg');
+    background-size: cover;
+}
+
+h1{
+	font-size: 45px;
+	font-family: "Work Sans SemiBold";
+}
+
+h1 span{
+	font-weight: 100;
+	font-family: "Work Sans Light";
+}
+
+h2{
+	position: relative;
+}
+h2::after{
+	content:" ";
+	position: absolute;
+	top: -12px;
+	left: 0px;
+	width: 40px;
+	height: 10px;
+}

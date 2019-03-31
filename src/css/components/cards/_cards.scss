@@ -1,0 +1,72 @@
+.card{
+
+	.card-container{
+		background-color: #FFF;
+		display: block;
+		margin: auto;
+		min-height: 480px;
+		position: relative;
+
+		.img-container{
+			max-width: 400px;
+			height: 300px;
+			overflow: hidden;
+			transition: top 10s;
+			position: relative;
+
+
+			&::before {
+				display: block;
+				content: '';
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				top: 0;
+				right: 0;
+				background: linear-gradient(45deg, #05b3d6 0%, rgba(5, 179, 214, 0) 70%), linear-gradient(135deg, #0958ec 10%, rgba(9, 88, 236, 0) 80%), linear-gradient(225deg, #d209ec 10%, rgba(210, 9, 236, 0) 80%), linear-gradient(315deg, #05e129 100%, rgba(5, 225, 41, 0) 70%);
+				opacity: 0.6;
+				z-index: 1;
+			}
+
+
+			img{
+				min-height: 300px;
+				width: auto;
+				width: 100%;
+				top: 0;
+				right: 0;
+				position: absolute;
+				left: 0;
+				object-fit: cover;
+			}
+		}
+
+		.content-container{
+			padding: 20px;
+			
+		}
+
+	
+
+	}
+}
+
+
+@media only screen and (max-width: 1199px){
+
+	.card{
+		article{margin-bottom: 30px;}
+		.card-container{
+			// height: 480px;
+		}
+	}
+
+}
+
+@media only screen and (max-width: 768px){
+	.card{
+		.card-container{
+			max-width: 350px;
+		}
+	}
+}

@@ -1,0 +1,35 @@
+.full-bg{
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+
+}
+
+.hero-space{
+  height: 270px;
+  min-height: 50vh;
+}
+
+sound{
+  display:block;
+  height: 55px;
+  line-height: 55px;
+  width: 100%;
+  font-size: 17px;
+  color: #FFF;
+  position: relative;
+}
+
+sound .equalizer{
+  display: none;
+  position: absolute;
+  right: -25px;
+}
+
+.playing .equalizer{display: block;}
+
+.bg-white{background: rgba(255, 255, 255, 0.09);}
+.bg-grey{background: rgba(255, 255, 255, 0.05);}

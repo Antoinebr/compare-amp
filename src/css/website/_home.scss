@@ -1,0 +1,60 @@
+form{
+    width: 70%;
+}
+
+.form-input{
+    width: 100%;
+}
+
+@media only screen and (max-width: 768px){
+    	
+    form{
+        width: 100%;
+    }
+}
+
+
+
+h2.cannonical::after{
+	background-color: #d62e2f;
+}
+
+h2.amp::after{
+	background-color: $clr-1;
+}
+
+.iframe-container{
+    display: grid;
+    grid-gap: 20px;
+    width: 80%;
+    grid-template-areas:
+    'h2-cannonical h2-amp'
+    'iframe-cannonical iframe-amp';
+}
+
+.iframe-container h2{
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+
+.iframe-container iframe{
+    display: block;
+    margin: auto;
+}
+
+.iframe-container h2.cannonical{
+    grid-area: h2-cannonical;
+}
+
+.iframe-container h2.amp{
+    grid-area: h2-amp;
+}
+
+.iframe-container iframe.cannonical{
+    grid-area: iframe-cannonical;
+}
+
+.iframe-container iframe.amp{
+    grid-area: iframe-amp;
+}

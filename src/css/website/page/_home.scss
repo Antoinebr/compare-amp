@@ -1,0 +1,63 @@
+@media only screen and (max-width: 768px){
+  	 
+  header img{
+    width: 140px
+  }
+
+  header h1{
+    font-size: 50px;
+  }
+
+  header .u-txtcatchline { font-size: 15px;}
+
+}
+
+
+body {
+  background: url('./pattern.svg');
+  background-size: contain;
+}
+
+
+.police {
+
+  #meh {
+      width: 300px;
+      display: block;
+      margin: auto;
+      max-width: 100%;
+  }
+
+  #arm-right {
+      transform-origin: top left;
+      transform-box: fill-box;
+      animation: armMoveR 2s infinite;
+  }
+
+  #arm-left {
+      transform-origin: top right;
+      transform-box: fill-box;
+      animation: armMoveL 2s infinite;
+  }
+
+  @keyframes armMoveL {
+      0% {
+          transform: rotate(0deg)
+      }
+
+      50% {
+          transform: rotate(40deg)
+      }
+  }
+
+
+  @keyframes armMoveR {
+      0% {
+          transform: rotate(0deg)
+      }
+
+      50% {
+          transform: rotate(-40deg)
+      }
+  }
+}
