@@ -2,6 +2,10 @@
 
 Compare  AMP page to non AMP
 
+## Demo : 
+
+[Compare AMP demo](https://antoinebr.github.io/compareAMP/)
+
 ## How to use 
 
 ###  Install the dependencies 
