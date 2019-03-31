@@ -6,6 +6,9 @@ Compare  AMP page to non AMP
 
 [Compare AMP demo](https://antoinebr.github.io/compareAMP/)
 
+![](http://g.recordit.co/3LjnpDgywp.gif)
+
+
 ## How to use 
 
 ###  Install the dependencies 
