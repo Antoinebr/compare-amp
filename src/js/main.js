@@ -6,18 +6,19 @@ $form.addEventListener('submit', async function(e){
 
 	e.preventDefault();
 
-	let [smoothScroll,validator] = await Promise.all([import('scroll-to-element'),import('validator')]);
+	let [smoothScroll,isURL] = await Promise.all([import('scroll-to-element'),import('validator/lib/isURL')]);
 
 	smoothScroll = smoothScroll.default;
 
+	isURL = isURL.default;
 
-	if( ! validator.isURL(this.cannonicalURL.value) ){
+	if( ! isURL(this.cannonicalURL.value) ){
 
 		alert('The Cannonical URL is not a valid URL');
 		return false;
 	}
 
-	if( ! validator.isURL(this.ampURL.value) ){
+	if( ! isURL(this.ampURL.value) ){
 		alert('The AMP URL is not a valid URL');
 		return false;
 	}
@@ -27,7 +28,7 @@ $form.addEventListener('submit', async function(e){
 	
 	$iframeContainer.innerHTML = `
 
-	<h2 class="cannonical"> Cannonical </h2> 
+	<h2 class="cannonical"> Canonical </h2> 
 				
 	<h2 class="amp"> AMP </h2>
 
