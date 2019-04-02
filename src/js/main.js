@@ -1,5 +1,7 @@
 import css from '@css/app.scss'
 
+import imagesLoaded from 'images-loaded';
+
 
 
 const testIframes = async (cannonicalURL, ampURL) => {
@@ -27,6 +29,23 @@ const errorMsg = (error,type)=> {
 	}
 
 	$form.insertAdjacentHTML('beforeend', `<p class="errors-msg msg--${type} u-pts u-pbs u-pls u-prs">${error}</p>`);
+}
+
+
+
+const addLoader = () => {
+
+	$form.insertAdjacentHTML('beforeend',
+	`<svg class="spinner u-dbma" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+			<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+	</svg>`);
+}
+
+
+const removeLoader = () => {
+	if (document.querySelector('.spinner') !== null) {
+		$form.removeChild(document.querySelector('.spinner'));
+	}
 }
 
 
@@ -67,7 +86,7 @@ $form.addEventListener('submit', async function (e) {
 
 		errorMsg('The site blocked iframes ! We are falling back on screenshots !','warning');
 
-		$iframeContainer.innerHTML = `
+		$iframeContainer.insertAdjacentHTML('afterbegin',`
 
 			<h2 class="cannonical"> Canonical </h2> 
 						
@@ -76,27 +95,35 @@ $form.addEventListener('submit', async function (e) {
 			<img id="iframe-canonical" class="u-shadowS" width="412px" src="https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}" />
 			
 			<img id="iframe-amp" class="u-shadowS" width="412px" src="https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}" />
+		`);
 
-		`;
 
-	
+		addLoader();
+
+		$iframeContainer.style.visibility = "hidden";
+
+		await imagesLoaded('.iframe-container');
+		
+		removeLoader();
+		
+		$iframeContainer.style.visibility = "visible";
 	}
 
 
 
 	if (canTheyBeIframed) {
 
-		$iframeContainer.innerHTML = `
+		$iframeContainer.insertAdjacentHTML('afterbegin',`
 
 			<h2 class="cannonical"> Canonical </h2> 
-						
+							
 			<h2 class="amp"> AMP </h2>
 
 			<iframe id="iframe-canonical" class="u-shadowS" width="412" height="12000" src="${this.cannonicalURL.value}" frameborder="0"></iframe>
 			
 			<iframe id="iframe-amp" class="u-shadowS" width="412" height="12000" src="${this.ampURL.value}" frameborder="0"></iframe>
 			
-		`;
+		`);
 
 	}
 
