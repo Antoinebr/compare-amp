@@ -48,6 +48,7 @@
     "highlight.js": "^9.14.2",
     "lodash": "^4.17.11",
     "lodash.escape": "^4.0.1",
+    "node-fetch": "^2.3.0",
     "scroll-to-element": "^2.0.3",
     "validator": "^10.11.0"
   }
