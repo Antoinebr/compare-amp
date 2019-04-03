@@ -48,11 +48,24 @@ const removeLoader = () => {
 	}
 }
 
-
+const toggleCompareButton = () => {
+	const $compareButton = $form.querySelector('button');
+	if($compareButton.disabled){
+		$compareButton.innerHTML = "Compare the two URLs";
+		$compareButton.disabled = false;
+	}
+	else{
+		$compareButton.innerHTML = "Loading URL comparison...";
+		$compareButton.disabled = true;
+	}
+}
 
 $form.addEventListener('submit', async function (e) {
 
 	e.preventDefault();
+
+	// Prevent multiple clicks while loading
+	toggleCompareButton();
 
 	let [smoothScroll, isURL] = await Promise.all([import('scroll-to-element'), import('validator/lib/isURL')]);
 
@@ -86,6 +99,9 @@ $form.addEventListener('submit', async function (e) {
 
 		errorMsg('The site blocked iframes ! We are falling back on screenshots !','warning');
 
+		//Clear existing comparisons
+		$iframeContainer.innerHTML = "";
+
 		$iframeContainer.insertAdjacentHTML('afterbegin',`
 
 			<h2 class="cannonical"> Canonical </h2> 
@@ -105,6 +121,9 @@ $form.addEventListener('submit', async function (e) {
 		await imagesLoaded('.iframe-container');
 		
 		removeLoader();
+
+		//Re-enable compare button
+		toggleCompareButton();
 		
 		$iframeContainer.style.visibility = "visible";
 	}
@@ -112,6 +131,12 @@ $form.addEventListener('submit', async function (e) {
 
 
 	if (canTheyBeIframed) {
+
+		//Re-enable compare button
+		toggleCompareButton();
+
+		//Clear existing comparisons
+		$iframeContainer.innerHTML = "";
 
 		$iframeContainer.insertAdjacentHTML('afterbegin',`
 
