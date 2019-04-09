@@ -4,6 +4,18 @@ import {
 	getAlternativeURL
 } from './amp-and-cannonical-detector';
 
+
+const $form = document.querySelector('form');
+const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+// Allow only one checkbox to be ticked 
+$checkboxes.forEach(elemenent => elemenent.addEventListener('click', function (e) {
+
+	$checkboxes.forEach(elemenent => elemenent.checked = false)
+	this.checked = true;
+}));
+
+
 /**
  * @name testIframes
  * @description Test if a given URL can be iframed
@@ -15,6 +27,14 @@ const testIframes = async (cannonicalURL, ampURL) => {
 
 	let [iframeTestCanonical, iframeTestAMP] = await Promise.all([fetch(`https://authorizeiframe.speedwat.ch/url/?url=${cannonicalURL}`), fetch(`https://authorizeiframe.speedwat.ch/url/?url=${ampURL}`)])
 
+	if (!iframeTestCanonical.ok) {
+		throw new Error(`We couldn't query the API to check if the iFrames on cannonical are authorized : ${await iframeTestCanonical.text() }`);
+	}
+
+	if (!iframeTestAMP.ok) {
+		throw new Error(`We couldn't query the API to check if the iFrames on AMP are authorized : ${await iframeTestAMP.text() }`);
+	}
+
 	const cannonicalIframeResult = await iframeTestCanonical.json();
 
 	const ampIframeResult = await iframeTestAMP.json();
@@ -25,7 +45,18 @@ const testIframes = async (cannonicalURL, ampURL) => {
 	};
 }
 
-const $form = document.querySelector('form');
+
+/**
+ * @name removeErrorMsg
+ * @description remove the erorr message from the UI 
+ * @returns {void}
+ */
+const removeErrorMsg = () => {
+
+	if (document.querySelector('.errors-msg') !== null) {
+		$form.removeChild(document.querySelector('.errors-msg'));
+	}
+}
 
 
 /**
@@ -35,11 +66,7 @@ const $form = document.querySelector('form');
  * @param {string} type of error ( warning || error || success)
  */
 const errorMsg = (error, type) => {
-
-	if (document.querySelector('.errors-msg') !== null) {
-		$form.removeChild(document.querySelector('.errors-msg'));
-	}
-
+	removeErrorMsg();
 	$form.insertAdjacentHTML('beforeend', `<p class="errors-msg msg--${type} u-pts u-pbs u-pls u-prs">${error}</p>`);
 }
 
@@ -52,9 +79,11 @@ const errorMsg = (error, type) => {
 const addLoader = () => {
 
 	$form.insertAdjacentHTML('beforeend',
-		`<svg class="spinner u-dbma" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+		`
+		<svg class="spinner u-dbma" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
 			<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-	</svg>`);
+		</svg>
+	`);
 }
 
 
@@ -111,30 +140,18 @@ const tryToGetAlternateURL = async (sourceURL, alternateURLField, linkRelType) =
 		this.innerHTML = " - Detecting...";
 
 		const alternativeURL = await getAlternativeURL(sourceURL, linkRelType).catch(e => {
-			console.log(this);
 			this.innerHTML = " - Detection failed. Try again?";
 			this.disabled = true;
 			console.error(e);
 		});
 
-		alternateURLField.value = alternativeURL ?  alternativeURL : "";
+		alternateURLField.value = alternativeURL ? alternativeURL : "";
 
-		if( alternativeURL ) this.parentNode.removeChild(this);
+		if (alternativeURL) this.parentNode.removeChild(this);
 
 	});
 
 }
-
-
-const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-// Allow only one checkbox to be ticked 
-$checkboxes.forEach(elemenent => elemenent.addEventListener('click', function (e) {
-
-	$checkboxes.forEach(elemenent => elemenent.checked = false)
-	this.checked = true;
-}));
-
 
 
 $form.addEventListener('submit', async function (e) {
@@ -143,8 +160,7 @@ $form.addEventListener('submit', async function (e) {
 
 		e.preventDefault();
 
-		// Prevent multiple clicks while loading
-		toggleCompareButton();
+		removeErrorMsg();
 
 		let [smoothScroll, isURL, imagesLoaded] = await Promise.all([import('scroll-to-element'), import('validator/lib/isURL'), import('images-loaded')]);
 
@@ -165,6 +181,9 @@ $form.addEventListener('submit', async function (e) {
 			errorMsg('The AMP URL is not a valid URL', 'error')
 			return false;
 		}
+
+		// Prevent multiple clicks while loading
+		toggleCompareButton();
 
 		addLoader();
 
@@ -211,7 +230,7 @@ $form.addEventListener('submit', async function (e) {
 			const {
 				cannonicalCanBeIframed,
 				ampCanBeIframed
-			} = await testIframes(this.cannonicalURL.value, this.ampURL.value).catch(console.log)
+			} = await testIframes(this.cannonicalURL.value, this.ampURL.value);
 
 			if (cannonicalCanBeIframed) {
 				// check if the cannonicalCanBeIframed 
