@@ -8,6 +8,24 @@ import {
 const $form = document.querySelector('form');
 const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
+/**
+ * @name iFrameTemplate
+ * @description an HTML template string for the iFrame
+ * @param {string} src 
+ * @param {string} id the id of the the HTML element
+ */
+const iFrameTemplate = (src,id="") => `<iframe id="${id}" class="u-shadowS" width="412" height="12000" src="${src}" frameborder="0"></iframe>`;
+
+
+/**
+ * @name imageTemplate
+ * @description an HTML template string for the image
+ * @param {string} src 
+ * @param {string} id the id of the the HTML element
+ */
+const imageTemplate = (src,id="") => `<img id="${id}" class="u-shadowS" width="412px" src="${src}"/>`;
+
+
 // Allow only one checkbox to be ticked 
 $checkboxes.forEach(elemenent => elemenent.addEventListener('click', function (e) {
 
@@ -204,8 +222,9 @@ $form.addEventListener('submit', async function (e) {
 
 		if (this.forceIframeMode.checked) {
 
-			$iframeContainer.insertAdjacentHTML('beforeend', `<iframe id="iframe-amp" class="u-shadowS" width="412" height="12000" src="https://iframereplacement.speedwat.ch/?url=${this.ampURL.value}" frameborder="0"></iframe>`);
-			$iframeContainer.insertAdjacentHTML('beforeend', ` <iframe id="iframe-canonical" class="u-shadowS" width="412" height="12000" src="https://iframereplacement.speedwat.ch/?url=${this.cannonicalURL.value}" frameborder="0"></iframe> `);
+			$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.ampURL.value}`,'iframe-amp') );
+			$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.cannonicalURL.value}`,'iframe-canonical') );
+
 
 			errorMsg(`We are forcing the site to display inside iFrames ! <strong>This can lead to visual differences</strong>`, 'warning');
 		}
@@ -213,8 +232,8 @@ $form.addEventListener('submit', async function (e) {
 
 		if (this.screenshotsOnlyMode.checked) {
 
-			$iframeContainer.insertAdjacentHTML('beforeend', `<img id="iframe-canonical" class="u-shadowS" width="412px" src="https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}" />`);
-			$iframeContainer.insertAdjacentHTML('beforeend', `<img id="iframe-amp" class="u-shadowS" width="412px" src="https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}" />`);
+			$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`,'iframe-canonical') )
+			$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`,'iframe-amp') )
 
 			errorMsg(`You are in screenshot only mode `, 'success');
 
@@ -234,17 +253,17 @@ $form.addEventListener('submit', async function (e) {
 
 			if (cannonicalCanBeIframed) {
 				// check if the cannonicalCanBeIframed 
-				$iframeContainer.insertAdjacentHTML('beforeend', ` <iframe id="iframe-canonical" class="u-shadowS" width="412" height="12000" src="${this.cannonicalURL.value}" frameborder="0"></iframe> `);
+				$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.cannonicalURL.value,'iframe-canonical'));
 			} else {
 				// else use a screenshot 
-				$iframeContainer.insertAdjacentHTML('beforeend', `<img id="iframe-canonical" class="u-shadowS" width="412px" src="https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}" />`);
+				$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`,'iframe-canonical'));
 			}
 
 
 			if (ampCanBeIframed) {
-				$iframeContainer.insertAdjacentHTML('beforeend', `<iframe id="iframe-amp" class="u-shadowS" width="412" height="12000" src="${this.ampURL.value}" frameborder="0"></iframe>`);
+				$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.ampURL.value,'iframe-amp'));
 			} else {
-				$iframeContainer.insertAdjacentHTML('beforeend', `<img id="iframe-amp" class="u-shadowS" width="412px" src="https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}" />`);
+				$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`,'iframe-amp'));
 			}
 
 
