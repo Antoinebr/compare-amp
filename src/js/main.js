@@ -110,13 +110,13 @@ const tryToGetAlternateURL = async (sourceURL, alternateURLField, linkRelType) =
 		this.disabled = true;
 		this.innerHTML = " - Detecting...";
 
-		const ampURL = await getAlternativeURL(sourceURL, linkRelType).catch(e => {
+		const alternativeURL = await getAlternativeURL(sourceURL, linkRelType).catch(e => {
 			this.innerHTML = " - Detection failed. Try again?";
 			this.disabled = true;
-			console.error(e)
-		})
+			console.error(e);
+		});
 
-		alternateURLField.value = ampURL
+		alternateURLField.value = alternativeURL;
 
 		this.parentNode.removeChild(this);
 

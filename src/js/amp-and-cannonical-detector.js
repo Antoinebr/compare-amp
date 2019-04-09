@@ -29,7 +29,7 @@ exports.getAlternativeURL = async (sourceURL,linkRelType) => {
 		mode: 'cors'
 	});
 
-	if (!fetchedPage.ok) throw new Error(`We received an invalid response ${await fetchedPage.text()}`);
+	if (!fetchedPage.ok) throw new Error(`We received an invalid response when trying to get a CORS free version of ${sourceURL} ${await fetchedPage.text()}`);
 
 	const fetchedPageTextReesponse = await fetchedPage.text();
 
