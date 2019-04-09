@@ -35,7 +35,7 @@ exports.getAlternativeURL = async (sourceURL, linkRelType) => {
 	const htmlDocument = parser.parseFromString(fetchedPageTextReesponse, "text/html");
 
 	alternativeURL = htmlDocument.documentElement.querySelector(`link[rel="${linkRelType}"`).getAttribute("href");
-
+	
 	if (!isURL(alternativeURL)) {
 		throw new Error(`We couldn't find a valid alternativeURL we got ${alternativeURL}`);
 	}
