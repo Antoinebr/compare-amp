@@ -96,7 +96,8 @@ const detectOtherUrl = async (currentField, otherField, tagToFind) => {
 	var parsedURL = "";
 
 	try{
-		var fetchedPage = await fetch(currentField.value, {mode:'cors'})
+		//Using cors-anywhere API to fetch the URL without origin issues
+		var fetchedPage = await fetch('https://cors-anywhere.herokuapp.com/'+currentField.value, {mode:'cors'})
 		.then( response => response.text())
 		.then( text => {
 			const parser = new DOMParser();
