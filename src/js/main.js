@@ -81,6 +81,60 @@ const toggleCompareButton = () => {
 	}
 }
 
+const prepareDetection = async (currentField, otherField, tagToFind) => {
+	//remove any existing detector buttons
+	if (document.querySelector('.detector') !== null) {
+		var detector = document.querySelector('.detector');
+		detector.parentNode.removeChild(detector);
+	}
+	//show a detector button on the other field, if the currentfield has a valid URL
+	let isURL = await import('validator/lib/isURL');
+	isURL = isURL.default;
+	if (isURL(currentField.value)){
+		
+		otherField.previousElementSibling.insertAdjacentHTML('beforeend','<a href="#" class="detector"> - Detect?</a>');
+		var newDetector = document.querySelector('.detector');
+		newDetector.addEventListener('click', async function(e){
+			e.preventDefault();
+			this.disabled=true;
+			this.innerHTML=" - Detecting...";
+			var otherURL = await detectOtherUrl(currentField, otherField,tagToFind);
+			if (otherURL){
+				otherField.value = otherURL;
+				this.parentNode.removeChild(this);
+			}else{
+				this.innerHTML=" - Detection failed. Try again?";
+				this.disabled = true;
+			}
+		});
+	}
+}
+
+const detectOtherUrl = async (currentField, otherField, tagToFind) => {
+	
+	var detectedURL = false;
+	var parsedURL = "";
+
+	try{
+		//Using cors-anywhere API to fetch the URL without origin issues
+		var fetchedPage = await fetch('https://cors-anywhere.herokuapp.com/'+currentField.value, {mode:'cors'})
+		.then( response => response.text())
+		.then( text => {
+			const parser = new DOMParser();
+			const htmlDocument = parser.parseFromString(text, "text/html");
+			try{
+				parsedURL = htmlDocument.documentElement.querySelector("link[rel='"+tagToFind+"']").getAttribute("href");
+			}catch(error){
+				return detectedURL;
+			}
+			detectedURL = parsedURL;
+		});
+	}catch{
+		return detectedURL;
+	}
+
+	return detectedURL;
+}
 
 const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
@@ -221,6 +275,12 @@ $form.addEventListener('submit', async function (e) {
 
 });
 
+$form.cannonicalURL.addEventListener('change', async function (e) {
+	prepareDetection(this, $form.ampURL, 'amphtml');
+});
+$form.ampURL.addEventListener('change', async function (e) {
+	prepareDetection(this, $form.cannonicalURL, 'canonical');
+});
 
 if (window.location.hash !== "" && window.location.hash.includes('ampURL') && window.location.hash.includes('cannonicalURL')) {
 
