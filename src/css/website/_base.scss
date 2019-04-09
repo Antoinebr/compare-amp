@@ -12,12 +12,12 @@ body{
 
 h1{
 	font-size: 45px;
-	font-family: "Work Sans SemiBold";
+	font-family: $header-font-family;
 }
 
 h1 span{
 	font-weight: 100;
-	font-family: "Work Sans Light";
+	font-family: $header-font-family;
 }
 
 h2{
