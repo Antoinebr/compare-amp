@@ -1,5 +1,3 @@
-
-
 const isURL = require('validator/lib/isURL');
 
 /**
@@ -8,19 +6,19 @@ const isURL = require('validator/lib/isURL');
  * @param {string} sourceURL URL ( could be the cannonical URL or the AMP url)
  * @returns {Promise || error} the promise will contain the alternative URL 
  */
-exports.getAlternativeURL = async (sourceURL,linkRelType) => {
+exports.getAlternativeURL = async (sourceURL, linkRelType) => {
 
 	let alternativeURL = null;
 
-    if(typeof sourceURL !== "string"){
-        throw new Error(`We expected a string as sourceURL we got ${typeof sourceURL}`);
-    }
-
-    if (!isURL(sourceURL)) {
-        throw new Error(`We expected an URL we got ${sourceURL}`);
+	if (typeof sourceURL !== "string") {
+		throw new Error(`We expected a string as sourceURL we got ${typeof sourceURL}`);
 	}
-	
-	if( typeof linkRelType !== "string"){
+
+	if (!isURL(sourceURL)) {
+		throw new Error(`We expected an URL we got ${sourceURL}`);
+	}
+
+	if (typeof linkRelType !== "string") {
 		throw new Error(`We expected a string as linkRelType we got ${typeof linkRelType}`);
 	}
 
@@ -38,7 +36,7 @@ exports.getAlternativeURL = async (sourceURL,linkRelType) => {
 
 	alternativeURL = htmlDocument.documentElement.querySelector(`link[rel="${linkRelType}"`).getAttribute("href");
 
-	if( !isURL(alternativeURL) ){
+	if (!isURL(alternativeURL)) {
 		throw new Error(`We couldn't find a valid alternativeURL we got ${alternativeURL}`);
 	}
 
