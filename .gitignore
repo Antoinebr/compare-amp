@@ -12,7 +12,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 .sass-cache 
-
+.vscode/
 
 # Project specific
 

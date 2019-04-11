@@ -1,8 +1,6 @@
 import css from '@css/app.scss'
 
-import {
-	getAlternativeURL
-} from './amp-and-cannonical-detector';
+import { getAlternativeURL } from './amp-and-cannonical-detector';
 
 
 const $form = document.querySelector('form');
@@ -14,7 +12,7 @@ const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
  * @param {string} src 
  * @param {string} id the id of the the HTML element
  */
-const iFrameTemplate = (src,id="") => `<iframe id="${id}" class="u-shadowS" width="412" height="12000" src="${src}" frameborder="0"></iframe>`;
+const iFrameTemplate = (src, id = "") => `<iframe id="${id}" class="u-shadowS" width="412" height="12000" src="${src}" frameborder="0"></iframe>`;
 
 
 /**
@@ -23,14 +21,14 @@ const iFrameTemplate = (src,id="") => `<iframe id="${id}" class="u-shadowS" widt
  * @param {string} src 
  * @param {string} id the id of the the HTML element
  */
-const imageTemplate = (src,id="") => `<img id="${id}" class="u-shadowS" width="412px" src="${src}"/>`;
+const imageTemplate = (src, id = "") => `<img id="${id}" class="u-shadowS" width="412px" src="${src}"/>`;
 
 
 // Allow only one checkbox to be ticked 
-$checkboxes.forEach(elemenent => elemenent.addEventListener('click', function (e) {
+$checkboxes.forEach(elemenent => elemenent.addEventListener('click', function(e) {
 
-	$checkboxes.forEach(elemenent => elemenent.checked = false)
-	this.checked = true;
+    $checkboxes.forEach(elemenent => elemenent.checked = false)
+    this.checked = true;
 }));
 
 
@@ -43,24 +41,24 @@ $checkboxes.forEach(elemenent => elemenent.addEventListener('click', function (e
  */
 const testIframes = async (cannonicalURL, ampURL) => {
 
-	let [iframeTestCanonical, iframeTestAMP] = await Promise.all([fetch(`https://authorizeiframe.speedwat.ch/url/?url=${cannonicalURL}`), fetch(`https://authorizeiframe.speedwat.ch/url/?url=${ampURL}`)])
+    let [iframeTestCanonical, iframeTestAMP] = await Promise.all([fetch(`https://authorizeiframe.speedwat.ch/url/?url=${cannonicalURL}`), fetch(`https://authorizeiframe.speedwat.ch/url/?url=${ampURL}`)])
 
-	if (!iframeTestCanonical.ok) {
-		throw new Error(`We couldn't query the API to check if the iFrames on cannonical are authorized : ${await iframeTestCanonical.text() }`);
-	}
+    if (!iframeTestCanonical.ok) {
+        throw new Error(`We couldn't query the API to check if the iFrames on cannonical are authorized : ${await iframeTestCanonical.text() }`);
+    }
 
-	if (!iframeTestAMP.ok) {
-		throw new Error(`We couldn't query the API to check if the iFrames on AMP are authorized : ${await iframeTestAMP.text() }`);
-	}
+    if (!iframeTestAMP.ok) {
+        throw new Error(`We couldn't query the API to check if the iFrames on AMP are authorized : ${await iframeTestAMP.text() }`);
+    }
 
-	const cannonicalIframeResult = await iframeTestCanonical.json();
+    const cannonicalIframeResult = await iframeTestCanonical.json();
 
-	const ampIframeResult = await iframeTestAMP.json();
+    const ampIframeResult = await iframeTestAMP.json();
 
-	return {
-		cannonicalCanBeIframed: cannonicalIframeResult.canBeIframed,
-		ampCanBeIframed: ampIframeResult.canBeIframed
-	};
+    return {
+        cannonicalCanBeIframed: cannonicalIframeResult.canBeIframed,
+        ampCanBeIframed: ampIframeResult.canBeIframed
+    };
 }
 
 
@@ -71,9 +69,9 @@ const testIframes = async (cannonicalURL, ampURL) => {
  */
 const removeErrorMsg = () => {
 
-	if (document.querySelector('.errors-msg') !== null) {
-		$form.removeChild(document.querySelector('.errors-msg'));
-	}
+    if (document.querySelector('.errors-msg') !== null) {
+        $form.removeChild(document.querySelector('.errors-msg'));
+    }
 }
 
 
@@ -84,8 +82,8 @@ const removeErrorMsg = () => {
  * @param {string} type of error ( warning || error || success)
  */
 const errorMsg = (error, type) => {
-	removeErrorMsg();
-	$form.insertAdjacentHTML('beforeend', `<p class="errors-msg msg--${type} u-pts u-pbs u-pls u-prs">${error}</p>`);
+    removeErrorMsg();
+    $form.insertAdjacentHTML('beforeend', `<p class="errors-msg msg--${type} u-pts u-pbs u-pls u-prs">${error}</p>`);
 }
 
 
@@ -96,8 +94,8 @@ const errorMsg = (error, type) => {
  */
 const addLoader = () => {
 
-	$form.insertAdjacentHTML('beforeend',
-		`
+    $form.insertAdjacentHTML('beforeend',
+        `
 		<svg class="spinner u-dbma" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
 			<circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
 		</svg>
@@ -111,9 +109,9 @@ const addLoader = () => {
  * @returns {void}
  */
 const removeLoader = () => {
-	if (document.querySelector('.spinner') !== null) {
-		$form.removeChild(document.querySelector('.spinner'));
-	}
+    if (document.querySelector('.spinner') !== null) {
+        $form.removeChild(document.querySelector('.spinner'));
+    }
 }
 
 
@@ -123,14 +121,14 @@ const removeLoader = () => {
  * @returns {void}
  */
 const toggleCompareButton = () => {
-	const $compareButton = $form.querySelector('button');
-	if ($compareButton.disabled) {
-		$compareButton.innerHTML = "Compare the two URLs";
-		$compareButton.disabled = false;
-	} else {
-		$compareButton.innerHTML = "Loading URL comparison...";
-		$compareButton.disabled = true;
-	}
+    const $compareButton = $form.querySelector('button');
+    if ($compareButton.disabled) {
+        $compareButton.innerHTML = "Compare the two URLs";
+        $compareButton.disabled = false;
+    } else {
+        $compareButton.innerHTML = "Loading URL comparison...";
+        $compareButton.disabled = true;
+    }
 }
 
 
@@ -142,76 +140,76 @@ const toggleCompareButton = () => {
  * @param {string} linkRelType the value of link rel "amphtml" "cannonical"...
  */
 const tryToGetAlternateURL = async (sourceURL, alternateURLField, linkRelType) => {
-	//remove any existing detector buttons
-	if (document.querySelector('.detector') !== null) {
-		const detector = document.querySelector('.detector');
-		detector.parentNode.removeChild(detector);
-	}
+    //remove any existing detector buttons
+    if (document.querySelector('.detector') !== null) {
+        const detector = document.querySelector('.detector');
+        detector.parentNode.removeChild(detector);
+    }
 
-	alternateURLField.previousElementSibling.insertAdjacentHTML('beforeend', '<a href="#" class="detector"> - Detect?</a>');
-	const newDetector = document.querySelector('.detector');
+    alternateURLField.previousElementSibling.insertAdjacentHTML('beforeend', '<a href="#" class="detector"> - Detect?</a>');
+    const newDetector = document.querySelector('.detector');
 
-	newDetector.addEventListener('click', async function (e) {
+    newDetector.addEventListener('click', async function(e) {
 
-		e.preventDefault();
-		this.disabled = true;
-		this.innerHTML = " - Detecting...";
+        e.preventDefault();
+        this.disabled = true;
+        this.innerHTML = " - Detecting...";
 
-		const alternativeURL = await getAlternativeURL(sourceURL, linkRelType).catch(e => {
-			this.innerHTML = " - Detection failed. Try again?";
-			this.disabled = true;
-			console.error(e);
-		});
+        const alternativeURL = await getAlternativeURL(sourceURL, linkRelType).catch(e => {
+            this.innerHTML = " - Detection failed. Try again?";
+            this.disabled = true;
+            console.error(e);
+        });
 
-		alternateURLField.value = alternativeURL ? alternativeURL : "";
+        alternateURLField.value = alternativeURL ? alternativeURL : "";
 
-		if (alternativeURL) this.parentNode.removeChild(this);
+        if (alternativeURL) this.parentNode.removeChild(this);
 
-	});
+    });
 
 }
 
 
-$form.addEventListener('submit', async function (e) {
+$form.addEventListener('submit', async function(e) {
 
-	try {
+    try {
 
-		e.preventDefault();
+        e.preventDefault();
 
-		removeErrorMsg();
+        removeErrorMsg();
 
-		let [smoothScroll, isURL, imagesLoaded] = await Promise.all([import('scroll-to-element'), import('validator/lib/isURL'), import('images-loaded')]);
+        let [smoothScroll, isURL, imagesLoaded] = await Promise.all([import('scroll-to-element'), import('validator/lib/isURL'), import('images-loaded')]);
 
-		smoothScroll = smoothScroll.default;
-		isURL = isURL.default;
-		imagesLoaded = imagesLoaded.default;
+        smoothScroll = smoothScroll.default;
+        isURL = isURL.default;
+        imagesLoaded = imagesLoaded.default;
 
-		const cannonicalURL = this.cannonicalURL.value;
+        const cannonicalURL = this.cannonicalURL.value;
 
-		const ampURL = this.ampURL.value;
+        const ampURL = this.ampURL.value;
 
-		if (!isURL(this.cannonicalURL.value)) {
-			errorMsg('The Cannonical URL is not a valid URL', 'error')
-			return false;
-		}
+        if (!isURL(this.cannonicalURL.value)) {
+            errorMsg('The Cannonical URL is not a valid URL', 'error')
+            return false;
+        }
 
-		if (!isURL(this.ampURL.value)) {
-			errorMsg('The AMP URL is not a valid URL', 'error')
-			return false;
-		}
+        if (!isURL(this.ampURL.value)) {
+            errorMsg('The AMP URL is not a valid URL', 'error')
+            return false;
+        }
 
-		// Prevent multiple clicks while loading
-		toggleCompareButton();
+        // Prevent multiple clicks while loading
+        toggleCompareButton();
 
-		addLoader();
+        addLoader();
 
-		const $iframeContainer = document.querySelector('.iframe-container');
+        const $iframeContainer = document.querySelector('.iframe-container');
 
-		//Clear existing comparisons
-		$iframeContainer.innerHTML = "";
+        //Clear existing comparisons
+        $iframeContainer.innerHTML = "";
 
-		// insert the headers 
-		$iframeContainer.insertAdjacentHTML('afterbegin', `
+        // insert the headers 
+        $iframeContainer.insertAdjacentHTML('afterbegin', `
 	
 		<h2 class="cannonical"> Canonical </h2> 
 					
@@ -220,121 +218,118 @@ $form.addEventListener('submit', async function (e) {
 		`);
 
 
-		if (this.forceIframeMode.checked) {
+        if (this.forceIframeMode.checked) {
 
-			$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.ampURL.value}`,'iframe-amp') );
-			$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.cannonicalURL.value}`,'iframe-canonical') );
-
-
-			errorMsg(`We are forcing the site to display inside iFrames ! <strong>This can lead to visual differences</strong>`, 'warning');
-		}
+            $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.ampURL.value}`, 'iframe-amp'));
+            $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.cannonicalURL.value}`, 'iframe-canonical'));
 
 
-		if (this.screenshotsOnlyMode.checked) {
-
-			$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`,'iframe-canonical') )
-			$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`,'iframe-amp') )
-
-			errorMsg(`You are in screenshot only mode `, 'success');
-
-			$iframeContainer.style.visibility = "hidden";
-			await imagesLoaded('.iframe-container');
-			$iframeContainer.style.visibility = "visible";
-		}
+            errorMsg(`We are forcing the site to display inside iFrames ! <strong>This can lead to visual differences</strong>`, 'warning');
+        }
 
 
+        if (this.screenshotsOnlyMode.checked) {
 
-		if (this.autoMode.checked) {
+            $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`, 'iframe-canonical'))
+            $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`, 'iframe-amp'))
 
-			const {
-				cannonicalCanBeIframed,
-				ampCanBeIframed
-			} = await testIframes(this.cannonicalURL.value, this.ampURL.value);
+            errorMsg(`You are in screenshot only mode `, 'success');
 
-			if (cannonicalCanBeIframed) {
-				// check if the cannonicalCanBeIframed 
-				$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.cannonicalURL.value,'iframe-canonical'));
-			} else {
-				// else use a screenshot 
-				$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`,'iframe-canonical'));
-			}
+            $iframeContainer.style.visibility = "hidden";
+            await imagesLoaded('.iframe-container');
+            $iframeContainer.style.visibility = "visible";
+        }
 
 
-			if (ampCanBeIframed) {
-				$iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.ampURL.value,'iframe-amp'));
-			} else {
-				$iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`,'iframe-amp'));
-			}
+
+        if (this.autoMode.checked) {
+
+            const { cannonicalCanBeIframed, ampCanBeIframed } = await testIframes(this.cannonicalURL.value, this.ampURL.value);
+
+            if (cannonicalCanBeIframed) {
+                // check if the cannonicalCanBeIframed 
+                $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.cannonicalURL.value, 'iframe-canonical'));
+            } else {
+                // else use a screenshot 
+                $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`, 'iframe-canonical'));
+            }
 
 
-			if (!cannonicalCanBeIframed || !ampCanBeIframed) {
-
-				let errorDetail = "";
-
-				if (!cannonicalCanBeIframed) {
-					errorDetail = "for the cannonical page only";
-				}
-
-				if (!ampCanBeIframed) {
-					errorDetail = "for the ⚡️ amp page only";
-				}
-
-				if (!cannonicalCanBeIframed && !ampCanBeIframed) {
-					errorDetail = "for both pages";
-				}
-
-				errorMsg(`The site blocked iframes ! We are falling back on screenshots <strong>${errorDetail}</strong>!`, 'warning');
-				$iframeContainer.style.visibility = "hidden";
-				await imagesLoaded('.iframe-container');
-				$iframeContainer.style.visibility = "visible";
-			}
+            if (ampCanBeIframed) {
+                $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.ampURL.value, 'iframe-amp'));
+            } else {
+                $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`, 'iframe-amp'));
+            }
 
 
-		}
+            if (!cannonicalCanBeIframed || !ampCanBeIframed) {
 
-		removeLoader();
-		toggleCompareButton();
+                let errorDetail = "";
 
-		smoothScroll('.iframe-container', {
-			offset: -200,
-			duration: 700
-		});
+                if (!cannonicalCanBeIframed) {
+                    errorDetail = "for the cannonical page only";
+                }
+
+                if (!ampCanBeIframed) {
+                    errorDetail = "for the ⚡️ amp page only";
+                }
+
+                if (!cannonicalCanBeIframed && !ampCanBeIframed) {
+                    errorDetail = "for both pages";
+                }
+
+                errorMsg(`The site blocked iframes ! We are falling back on screenshots <strong>${errorDetail}</strong>!`, 'warning');
+                $iframeContainer.style.visibility = "hidden";
+                await imagesLoaded('.iframe-container');
+                $iframeContainer.style.visibility = "visible";
+            }
 
 
-		window.location.hash = `?ampURL=${ampURL}&cannonicalURL=${cannonicalURL}`;
+        }
+
+        removeLoader();
+        toggleCompareButton();
+
+        smoothScroll('.iframe-container', {
+            offset: -200,
+            duration: 700
+        });
 
 
-	} catch (e) {
+        window.location.hash = `?ampURL=${ampURL}&cannonicalURL=${cannonicalURL}`;
 
-		errorMsg(`Something wrong happened : ${e.toString()}`, 'error');
 
-	}
+    } catch (e) {
+
+        errorMsg(`Something wrong happened : ${e.toString()}`, 'error');
+
+    }
 
 });
 
 
-$form.cannonicalURL.addEventListener('change', async function (e) {
-	tryToGetAlternateURL(this.value, $form.ampURL, 'amphtml').catch(console.log)
+$form.cannonicalURL.addEventListener('change', async function(e) {
+    tryToGetAlternateURL(this.value, $form.ampURL, 'amphtml').catch(console.log)
 });
 
 
-$form.ampURL.addEventListener('change', async function (e) {
-	tryToGetAlternateURL(this.value, $form.cannonicalURL, 'canonical').catch(console.log)
+$form.ampURL.addEventListener('change', async function(e) {
+    tryToGetAlternateURL(this.value, $form.cannonicalURL, 'canonical').catch(console.log)
 });
 
 
 if (window.location.hash !== "" && window.location.hash.includes('ampURL') && window.location.hash.includes('cannonicalURL')) {
 
-	const currentURL = window.location.hash.replace("#", "");
+    const currentURL = window.location.hash.replace("#", "");
 
-	const URLparams = new URLSearchParams(currentURL);
+    const URLparams = new URLSearchParams(currentURL);
 
-	if (URLparams.has('ampURL') && URLparams.has('cannonicalURL')) {
+    if (URLparams.has('ampURL') && URLparams.has('cannonicalURL')) {
 
-		$form.cannonicalURL.value = URLparams.get('cannonicalURL');
-		$form.ampURL.value = URLparams.get('ampURL');
+        $form.cannonicalURL.value = URLparams.get('cannonicalURL');
+        $form.ampURL.value = URLparams.get('ampURL');
 
-		document.querySelector('form button').click();
-	}
+        document.querySelector('form button').click();
+    }
 
 }
