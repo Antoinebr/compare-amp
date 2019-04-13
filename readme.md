@@ -14,6 +14,9 @@ Compare  AMP page to non AMP
 ###  Install the dependencies 
  ```npm install```
 
+### Run the end to end tests 
+
+```npm run test```
 
 ### Use the project's scaffolding
 
