@@ -8,13 +8,12 @@ Compare  AMP page to non AMP
 
 ![](http://g.recordit.co/3LjnpDgywp.gif)
 
+## How to use
 
-## How to use 
-
-###  Install the dependencies 
+###  Install the dependencies
  ```npm install```
 
-### Run the end to end tests 
+### Run the end to end tests
 
 ```npm run test```
 
@@ -24,7 +23,7 @@ The ```css``` should co in ```src/css```
 
 The ```js``` should co in ```src/js```
 
-The entry ```HTML``` file goes in ```src/index.html``` 
+The entry ```HTML``` file goes in ```src/index.html```
 
 ### run the dev env
 
@@ -36,8 +35,6 @@ The entry ```HTML``` file goes in ```src/index.html```
 
 <hr>
 
-
-#
 ## Aliases
 
 ```JavaScript 

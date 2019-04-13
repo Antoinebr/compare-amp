@@ -53,6 +53,7 @@ describe('Test the form', () => {
 
     }, 30000);
 
+
     it('should return an error when a Canonical url is missing', async () => {
 
         const page = await browser.newPage();
@@ -68,7 +69,7 @@ describe('Test the form', () => {
     }, 30000);
 
 
-    it('should only be possible to only one checkbox', async () => {
+    it('should be possible to check only one checkbox', async () => {
 
         const page = await browser.newPage();
         await page.goto(`http://localhost:${process.env.PORT}/`);
@@ -76,10 +77,10 @@ describe('Test the form', () => {
         await page.click('input[name="screenshotsOnlyMode"');
         await page.click('input[name="autoMode"');
         // we get all the checkbox then we create an array then we filter the true values then we should get only one true value
-        const checkboxes = await page.$$eval(`input[type="checkbox"]`, checkboxes => checkboxes.map( checkbox => checkbox.checked).filter(e => e === true));
+        const checkboxes = await page.$$eval(`input[type="checkbox"]`, checkboxes => checkboxes.map(checkbox => checkbox.checked).filter(e => e === true));
         expect(checkboxes.length).toEqual(1);
 
-    },30000);
+    }, 30000);
 
 
     it('should show the URLs into screenshots', async () => {
