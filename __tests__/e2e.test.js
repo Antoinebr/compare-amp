@@ -16,9 +16,9 @@ beforeAll(async () => {
     server = app.listen(process.env.PORT);
 
     browser = await puppeteer.launch({
-        headless: false,
-        slowMo: 80,
-        args: ['--window-size=1920,1080']
+        // headless: false,
+        // slowMo: 80,
+        // args: ['--window-size=1920,1080']
     });
 
 });

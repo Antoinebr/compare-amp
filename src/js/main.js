@@ -2,7 +2,6 @@ import css from '@css/app.scss'
 
 import { getAlternativeURL } from './amp-and-cannonical-detector';
 
-
 const $form = document.querySelector('form');
 const $checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
