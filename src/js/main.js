@@ -40,7 +40,7 @@ $checkboxes.forEach(elemenent => elemenent.addEventListener('click', function(e)
  */
 const testIframes = async (cannonicalURL, ampURL) => {
 
-    let [iframeTestCanonical, iframeTestAMP] = await Promise.all([fetch(`https://authorizeiframe.speedwat.ch/url/?url=${cannonicalURL}`), fetch(`https://authorizeiframe.speedwat.ch/url/?url=${ampURL}`)])
+    let [iframeTestCanonical, iframeTestAMP] = await Promise.all([fetch(`https://us-central1-speedracenl.cloudfunctions.net/is-iframeable?url=${cannonicalURL}`), fetch(`https://us-central1-speedracenl.cloudfunctions.net/is-iframeable?url=${ampURL}`)])
 
     if (!iframeTestCanonical.ok) {
         throw new Error(`We couldn't query the API to check if the iFrames on cannonical are authorized : ${await iframeTestCanonical.text() }`);
@@ -219,8 +219,8 @@ $form.addEventListener('submit', async function(e) {
 
         if (this.forceIframeMode.checked) {
 
-            $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.ampURL.value}`, 'iframe-amp'));
-            $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://iframereplacement.speedwat.ch/?url=${this.cannonicalURL.value}`, 'iframe-canonical'));
+            $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://cors-my-site-rby6ot2pbq-uc.a.run.app/?url=${this.ampURL.value}`, 'iframe-amp'));
+            $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(`https://cors-my-site-rby6ot2pbq-uc.a.run.app/?url=${this.cannonicalURL.value}`, 'iframe-canonical'));
 
 
             errorMsg(`We are forcing the site to display inside iFrames ! <strong>This can lead to visual differences</strong>`, 'warning');
@@ -229,8 +229,8 @@ $form.addEventListener('submit', async function(e) {
 
         if (this.screenshotsOnlyMode.checked) {
 
-            $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`, 'iframe-canonical'))
-            $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`, 'iframe-amp'))
+            $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer-rby6ot2pbq-uc.a.run.app/screenshot/?url=${this.cannonicalURL.value}`, 'iframe-canonical'))
+            $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer-rby6ot2pbq-uc.a.run.app/screenshot/?url=${this.ampURL.value}`, 'iframe-amp'))
 
             errorMsg(`You are in screenshot only mode `, 'success');
 
@@ -250,14 +250,14 @@ $form.addEventListener('submit', async function(e) {
                 $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.cannonicalURL.value, 'iframe-canonical'));
             } else {
                 // else use a screenshot 
-                $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.cannonicalURL.value}`, 'iframe-canonical'));
+                $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer-rby6ot2pbq-uc.a.run.app/screenshot/?url=${this.cannonicalURL.value}`, 'iframe-canonical'));
             }
 
 
             if (ampCanBeIframed) {
                 $iframeContainer.insertAdjacentHTML('beforeend', iFrameTemplate(this.ampURL.value, 'iframe-amp'));
             } else {
-                $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer.speedwat.ch/screenshot/?url=${this.ampURL.value}`, 'iframe-amp'));
+                $iframeContainer.insertAdjacentHTML('beforeend', imageTemplate(`https://puppeteer-rby6ot2pbq-uc.a.run.app/screenshot/?url=${this.ampURL.value}`, 'iframe-amp'));
             }
 
 
