@@ -48,7 +48,7 @@
     "webpack-manifest-plugin": "^2.0.4"
   },
   "dependencies": {
-    "highlight.js": "^9.14.2",
+    "highlight.js": "^10.4.1",
     "i": "^0.3.6",
     "images-loaded": "^1.0.0",
     "imagesloaded": "^4.1.4",
