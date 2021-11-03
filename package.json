@@ -57,6 +57,6 @@
     "node-fetch": "^2.3.0",
     "npm": "^6.9.0",
     "scroll-to-element": "^2.0.3",
-    "validator": "^10.11.0"
+    "validator": "^13.7.0"
   }
 }
